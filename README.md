@@ -15,4 +15,4 @@ run install.sh or install.bat to install packages
 * 12 inch dick as soon as you download the selfbot
 
 ### version
-0.0.2b
+V/1.0

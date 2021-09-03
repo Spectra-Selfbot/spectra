@@ -1,4 +1,3 @@
-# FIX LINE 924
 version = '0.0.2b'
 import os, discord, json, time, aiohttp, datetime, string, io, asyncio, sys, ctypes, random, requests, urllib.parse, base64, pypresence
 from colorama import Fore, Style, init
@@ -23,13 +22,11 @@ except:
 
 spectraselfbot = commands.Bot(description='Spectra Selfbot.', command_prefix=prefix, self_bot=True)
 spectraselfbot.remove_command('help')
-
+rpc = pypresence.Presence(883344467724206110)
+rpc.connect()
 ctypes.windll.kernel32.SetConsoleTitleW(f'Loading...')
+motdz = requests.get("https://raw.githubusercontent.com/Spectra-Selfbot/spectra/main/ext/motd.txt").text
 
-messageofthedaylink = urlopen("https://pastebin.com/raw/7gEUTr7S")
-motdz = (str(messageofthedaylink.read(),'utf-8'))
-
-#When bot is ready, will print this shit out
 def ready():
     os.system("mode 95,25")
     timeoflogin = datetime.datetime.now().strftime("%H:%M %p") 
@@ -45,17 +42,8 @@ def ready():
 {Fore.MAGENTA}C{Fore.BLUE}o{Fore.MAGENTA}n{Fore.BLUE}s{Fore.MAGENTA}o{Fore.BLUE}l{Fore.MAGENTA}e {Fore.BLUE}l{Fore.MAGENTA}o{Fore.BLUE}g{Fore.MAGENTA}s{Fore.BLUE}.{Fore.MAGENTA}.{Fore.BLUE}.
 '''+Fore.RESET)    
     time.sleep(0.2)
-    print(f"{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}MOTD {Fore.MAGENTA}| {Fore.WHITE}{motdz}")
-    time.sleep(0.2)
-    print(f"{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Successfuly logged in to {Fore.MAGENTA}{spectraselfbot.user.name}{Fore.BLUE}#{Fore.MAGENTA}{spectraselfbot.user.discriminator}.")            
-    time.sleep(0.2)
-    print(f"{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Prefix: {prefix}")
-    time.sleep(0.2)
-    print(f"{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Connected To {len(list(spectraselfbot.guilds))} server('s).")
-    time.sleep(0.2)
-    print(f"{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Connected To {len(list(spectraselfbot.user.friends))} friend('s).")
+    print(f"{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}MOTD {Fore.MAGENTA}| {Fore.WHITE}{motdz}\n{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Successfuly logged in to {Fore.MAGENTA}{spectraselfbot.user.name}{Fore.BLUE}#{Fore.MAGENTA}{spectraselfbot.user.discriminator}.\n{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Prefix: {prefix}\n{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Connected To {len(list(spectraselfbot.guilds))} server(s).\n{Fore.MAGENTA}[{Fore.WHITE}{timeoflogin}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Logged In {Fore.MAGENTA}| {Fore.WHITE}Connected To {len(list(spectraselfbot.user.friends))} friend(s).")
 
-#On message event
 @spectraselfbot.event
 async def on_message(message):
     if 'giveaway' in message.content:
@@ -1610,6 +1598,7 @@ async def nitro(ctx):
     print(f"{Fore.MAGENTA}[{Fore.WHITE}{time}{Fore.MAGENTA}] [{Fore.BLUE}√{Fore.MAGENTA}] {Fore.WHITE}Command ran {Fore.MAGENTA}|{Fore.WHITE} nitro"+Fore.RESET) 
 
 if config.get("saved") == False:
+    rpc.update(details=f'Setting up Spectra', large_image='s', large_text='Spectra', buttons=[{"label": "Spectra Discord Server", "url": "https://discord.gg/octo"}, {"label": "Spectra Repository", "url":"https://github.com/Spectra-Selfbot/spectra"}], start=time.time())
     print(f"{Fore.MAGENTA}[{Fore.WHITE}SETUP{Fore.MAGENTA}]{Fore.WHITE} Enter your desired prefix below. {Fore.MAGENTA}")
     prefix = input("$ ")
     if len(prefix) > 1:
@@ -1642,12 +1631,14 @@ if config.get("saved") == False:
             sys.exit()
 elif config.get("saved") == True:
     try:
+        rpc.update(details='Using Spectra Selfbot', large_image='s', large_text='Spectra', buttons=[{"label": "Spectra Discord Server", "url": "https://discord.gg/octo"}, {"label": "Spectra Repository", "url":"https://github.com/Spectra-Selfbot/spectra"}], start=time.time())
         spectraselfbot.run(config.get("token"), bot=False, reconnect=True)
     except discord.errors.LoginFailure:
         print(f"{Fore.RED}[{Fore.WHITE}ERROR{Fore.RED}]{Fore.WHITE} Failed connecting to token, please make sure you have entered it in correctly and it is a valid token.")
         os.system("pause>nul")
         sys.exit()
 else:
+    rpc.update(details=f'Setting up Spectra', large_image='s', large_text='Spectra', buttons=[{"label": "Spectra Discord Server", "url": "https://discord.gg/octo"}, {"label": "Spectra Repository", "url":"https://github.com/Spectra-Selfbot/spectra"}], start=time.time())
     print(f"{Fore.MAGENTA}[{Fore.WHITE}SETUP{Fore.MAGENTA}]{Fore.WHITE}  Enter your desired prefix below. {Fore.MAGENTA}")
     prefix = input("$ ")
     if len(prefix) > 1:
