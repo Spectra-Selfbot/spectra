@@ -1,0 +1,6 @@
+discord
+aiohttp
+colorama
+requests
+bs4
+DiscordWebhook
