@@ -1,6 +1,7 @@
-discord
-aiohttp
-colorama
-requests
-bs4
-DiscordWebhook
+aiohttp==3.7.4.post0
+bs4==0.0.1
+colorama==0.4.4
+discord==1.0.1
+discord-webhook==0.14.0
+pypresence==4.2.0
+requests==2.25.1
