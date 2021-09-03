@@ -1,4 +1,4 @@
-version = '0.0.2b'
+version = '0.0.3b'
 import os, discord, json, time, aiohttp, datetime, string, io, asyncio, sys, ctypes, random, requests, urllib.parse, base64, pypresence
 from colorama import Fore, Style, init
 from discord.ext import commands
